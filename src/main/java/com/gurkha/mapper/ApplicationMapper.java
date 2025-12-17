@@ -11,6 +11,7 @@ public class ApplicationMapper {
         ApplicationDto dto = new ApplicationDto();
         dto.setId(app.getId());
         dto.setPosition(app.getPosition());
+        dto.setEmail(app.getEmail());
         dto.setName(app.getName());
         dto.setPhone(app.getPhone());
         dto.setCvName(app.getCvName());
@@ -22,6 +23,7 @@ public class ApplicationMapper {
         Application app = new Application();
         app.setId(dto.getId());
         app.setPosition(dto.getPosition());
+        app.setEmail(dto.getEmail());
         app.setName(dto.getName());
         app.setPhone(dto.getPhone());
         app.setCvName(name);

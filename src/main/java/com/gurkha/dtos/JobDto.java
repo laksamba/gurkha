@@ -11,7 +11,6 @@ public class JobDto {
     private Long id;
     private String position;
     private String price;
-
     private String type; // If JobType is enum, you can use String in DTO
     private String description;
     private List<String> requirements;

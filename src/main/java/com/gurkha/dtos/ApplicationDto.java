@@ -10,6 +10,7 @@ public class ApplicationDto {
     private String position;
     private String name;
     private String phone;
+    private String email;
     private  String cvName;
     private  String cvUrl;
     private MultipartFile cv;
