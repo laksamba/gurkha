@@ -14,5 +14,4 @@ public class ApplicationDto {
     private  String cvName;
     private  String cvUrl;
     private MultipartFile cv;
-
 }
