@@ -20,10 +20,13 @@ public class Blog
     @Column(unique = true)
     @NotBlank(message = "image name not set")
     private  String imageName;
+
     @NotBlank(message = "image url not set")
     private  String imageUrl;
+
     @NotBlank(message = "title not set")
     private  String  title;
+    
     @NotBlank(message = "author not set")
     private  String author;
 

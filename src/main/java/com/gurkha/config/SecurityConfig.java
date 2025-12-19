@@ -47,7 +47,4 @@ public class SecurityConfig {
                 .addFilterBefore(authFilterService, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
-
-
-
 }

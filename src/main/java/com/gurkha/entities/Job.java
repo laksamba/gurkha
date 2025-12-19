@@ -16,10 +16,11 @@ public class Job {
     @Id
      @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotNull(message = "position is required")
     private  String position;
 
-    @NotNull(message = "position is required")
+    @NotNull(message = "price is required")
     private String price;
 
     @Enumerated(EnumType.STRING)
