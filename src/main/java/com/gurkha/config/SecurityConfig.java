@@ -37,8 +37,8 @@ public class SecurityConfig {
                                 "/auth/register",
                                 "/auth/refresh")
                         .permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/contact").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/app").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/contact","/api/app","/api/blog","/api/job").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/job/**","/api/blogs","/api/blog/**").permitAll()
                         .anyRequest()
                         .authenticated())
                 .sessionManagement(session -> session
