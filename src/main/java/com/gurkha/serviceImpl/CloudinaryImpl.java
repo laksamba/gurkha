@@ -1,26 +1,20 @@
 package com.gurkha.serviceImpl;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.cloudinary.Cloudinary;
 import com.gurkha.service.CloudinaryService;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import lombok.RequiredArgsConstructor;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Service
 public class CloudinaryImpl implements  CloudinaryService {
 
-    private  final Cloudinary cloudinary;
+    private final Cloudinary cloudinary;
    
 
     @Override
@@ -31,7 +25,7 @@ public class CloudinaryImpl implements  CloudinaryService {
         params.put("unique_filename", false);
         params.put("resource_type", "auto");
         try {
-            return cloudinary.uploader().upload(file.getBytes(), params);
+            return cloudinary.uploader().upload(file.getBytes(),params);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

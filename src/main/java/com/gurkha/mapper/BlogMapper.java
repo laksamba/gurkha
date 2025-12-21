@@ -52,8 +52,8 @@ public class BlogMapper {
         blog.setAuthor(dto.getAuthor());
         blog.setDescription(dto.getDescription());
         blog.setPublishedOn(dto.getPublishedOn());
-        blog.setImageName(name != null ? name : null);
-        blog.setImageUrl(url != null ? name : null);
+        blog.setImageName(name);
+        blog.setImageUrl(url);
 
         // Convert Headers
         List<Header> headers = dto.getHeaders().stream().map(hdto -> {

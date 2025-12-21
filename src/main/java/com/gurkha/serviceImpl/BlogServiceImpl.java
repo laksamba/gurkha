@@ -6,20 +6,24 @@ import com.gurkha.dtos.HeaderDto;
 import com.gurkha.entities.Blog;
 import com.gurkha.entities.Header;
 import com.gurkha.entities.Paragaraph;
-import com.gurkha.fileHadling.FilePutGet;
+//import com.gurkha.fileHadling.FilePutGet;
+import com.gurkha.exception.BadRequestException;
 import com.gurkha.mapper.BlogMapper;
 import com.gurkha.repository.BlogRepo;
 import com.gurkha.repository.HeaderRepo;
 import com.gurkha.repository.ParagaraphRepo;
 import com.gurkha.service.BlogService;
+import com.gurkha.service.CloudinaryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.time.LocalDateTime;
 
@@ -30,22 +34,28 @@ import java.util.stream.Collectors;
 public class BlogServiceImpl implements BlogService {
 
     private final BlogRepo blogRepository;
-    private  final FilePutGet fileService;
     private final CloudinaryService cloudinaryService;
-    private final HeaderRepo headerRepository;
-    private final ParagaraphRepo paragraphRepository;
 
 
     @Override
     public BlogDto createBlog(BlogDto dto) {
-         Map uploadResult = cloudinaryService.upload(dto.getImage(), "blogs");
-        String fileName=null;
-        String fullPath=null; 
+
+        MultipartFile cvFile = dto.getImage();
+
+        if (cvFile == null || cvFile.isEmpty()) {
+            throw new BadRequestException("CV file is required");
+        }
+        // Save file using your file servic
+
+        String fileName =null;
+        String fullPath =null;
+
+        Map uploadResult = cloudinaryService.upload(cvFile,"blogs");
         // Extract file information
         if(uploadResult !=null){
-         fileName = (String) uploadResult.get("original_filename");
-         fullPath = (String) uploadResult.get("url");
-        // Save image
+            fileName = (String) uploadResult.get("original_filename");
+            fullPath = (String) uploadResult.get("url");
+            // Save image
         }
         System.out.println("run of the this ");
         Blog saved = blogRepository.save(BlogMapper.toEntity(fileName,fullPath,dto)); 
@@ -78,8 +88,7 @@ public class BlogServiceImpl implements BlogService {
 
         
 
-        if (dto.getImage() != null && !dto.getImage().isEmpty()) {
-              Map uploadResult = cloudinaryService.upload(dto.getImage(), "blogs");
+        if (dto.getImage() != null && !dto.getImage().isEmpty()) {Map uploadResult = cloudinaryService.upload(dto.getImage(),"blogs");
         // Extract file information
         if(uploadResult !=null){
          fileName = (String) uploadResult.get("original_filename");

@@ -4,18 +4,18 @@ import com.gurkha.dtos.ApplicationDto;
 import com.gurkha.entities.Application;
 import com.gurkha.exception.BadRequestException;
 import com.gurkha.exception.ResourceNotFoundException;
-import com.gurkha.fileHadling.FilePutGet;
 import com.gurkha.mapper.ApplicationMapper;
 import com.gurkha.repository.ApplicationRepo;
 import com.gurkha.service.ApplicationService;
 
+import com.gurkha.service.CloudinaryService;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 
 @Service
@@ -23,6 +23,7 @@ import java.util.List;
 public class ApplicationServiceImpl  implements ApplicationService {
 
     private final   ApplicationRepo applicationRepository;
+    private  final CloudinaryService cloudinaryService;
 
     
     @Override
@@ -33,16 +34,18 @@ public class ApplicationServiceImpl  implements ApplicationService {
         if (cvFile == null || cvFile.isEmpty()) {
             throw new BadRequestException("CV file is required");
         }
-        // Save file using your file service
-        String[] savedData = filePutGet.saveFile(cvFile,"cv");
+        // Save file using your file servic
 
-        String fileName = savedData[0];
-        String fullPath = savedData[2];
+        String fileName =null;
+        String fullPath =null;
 
-        ApplicationDto tempHolder= new ApplicationDto();
-        tempHolder.setCvName(fileName);
-        tempHolder.setCvUrl(fullPath);
-
+        Map uploadResult = cloudinaryService.upload(dto.getCv(),"cv");
+        // Extract file information
+        if(uploadResult !=null){
+            fileName = (String) uploadResult.get("original_filename");
+            fullPath = (String) uploadResult.get("url");
+            // Save image
+        }
         return ApplicationMapper.toDto(applicationRepository.save(ApplicationMapper.toEntity(fileName,fullPath,dto)));
     }
 
