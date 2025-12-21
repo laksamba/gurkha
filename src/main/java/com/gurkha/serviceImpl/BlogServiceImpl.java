@@ -31,20 +31,24 @@ public class BlogServiceImpl implements BlogService {
 
     private final BlogRepo blogRepository;
     private  final FilePutGet fileService;
+    private final CloudinaryService cloudinaryService;
     private final HeaderRepo headerRepository;
     private final ParagaraphRepo paragraphRepository;
 
 
     @Override
     public BlogDto createBlog(BlogDto dto) {
+         Map uploadResult = cloudinaryService.upload(dto.getImage(), "blogs");
+        String fileName=null;
+        String fullPath=null; 
+        // Extract file information
+        if(uploadResult !=null){
+         fileName = (String) uploadResult.get("original_filename");
+         fullPath = (String) uploadResult.get("url");
         // Save image
-        String[] savedData = fileService.saveFile(dto.getImage(),"blog");
-
-        String fileName = savedData[0];
-        String fullPath = savedData[2];
-
+        }
         System.out.println("run of the this ");
-        Blog saved = blogRepository.save(BlogMapper.toEntity(fileName,fullPath,dto));
+        Blog saved = blogRepository.save(BlogMapper.toEntity(fileName,fullPath,dto)); 
         return BlogMapper.toDto(saved);
     }
 
@@ -72,10 +76,16 @@ public class BlogServiceImpl implements BlogService {
         String fileName = blog.getImageName();
         String fullPath = blog.getImageUrl();
 
+        
+
         if (dto.getImage() != null && !dto.getImage().isEmpty()) {
-            String[] savedData = fileService.saveFile(dto.getImage(),"blog");
-            fileName = savedData[0];
-            fullPath = savedData[2];
+              Map uploadResult = cloudinaryService.upload(dto.getImage(), "blogs");
+        // Extract file information
+        if(uploadResult !=null){
+         fileName = (String) uploadResult.get("original_filename");
+         fullPath = (String) uploadResult.get("url");
+        // Save image
+        }
         }
 
         Blog updated = blogRepository.save(BlogMapper.mapUpdate(fileName,fullPath, dto,blog));

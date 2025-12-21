@@ -23,16 +23,11 @@ import java.util.List;
 public class ApplicationServiceImpl  implements ApplicationService {
 
     private final   ApplicationRepo applicationRepository;
-    private final FilePutGet filePutGet;
 
- 
-
-
-
-
+    
     @Override
     public ApplicationDto createApplication(ApplicationDto dto) {
-
+        
         MultipartFile cvFile = dto.getCv();
 
         if (cvFile == null || cvFile.isEmpty()) {
