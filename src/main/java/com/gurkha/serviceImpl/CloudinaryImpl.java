@@ -22,7 +22,7 @@ public class CloudinaryImpl implements  CloudinaryService {
         Map<String, Object> params = new HashMap<>();
         params.put("folder", "uploads/" + folder);
         params.put("use_filename", true);
-        params.put("unique_filename", false);
+        params.put("unique_filename", true);
         params.put("resource_type", "auto");
         try {
             return cloudinary.uploader().upload(file.getBytes(),params);
