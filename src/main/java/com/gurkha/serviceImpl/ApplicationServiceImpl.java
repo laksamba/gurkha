@@ -42,7 +42,7 @@ public class ApplicationServiceImpl  implements ApplicationService {
         Map uploadResult = cloudinaryService.upload(dto.getCv(),"cv");
         // Extract file information
         if(uploadResult !=null){
-            fileName = (String) uploadResult.get("original_filename");
+            fileName = (String) uploadResult.get("public_id");
             fullPath = (String) uploadResult.get("url");
             // Save image
         }

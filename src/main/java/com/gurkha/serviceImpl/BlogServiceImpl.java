@@ -53,7 +53,7 @@ public class BlogServiceImpl implements BlogService {
         Map uploadResult = cloudinaryService.upload(cvFile,"blogs");
         // Extract file information
         if(uploadResult !=null){
-            fileName = (String) uploadResult.get("original_filename");
+            fileName = (String) uploadResult.get("public_id");
             fullPath = (String) uploadResult.get("url");
             // Save image
         }
