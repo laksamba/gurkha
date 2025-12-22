@@ -35,7 +35,6 @@ public class ApplicationServiceImpl  implements ApplicationService {
             throw new BadRequestException("CV file is required");
         }
         // Save file using your file servic
-
         String fileName =null;
         String fullPath =null;
 
